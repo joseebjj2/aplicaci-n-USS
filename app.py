@@ -12,7 +12,7 @@ st.subheader("¡Hola, Streamlit!")
 st.write("Esta es una aplicación simple")
 
 # Imagen en el área principal (puedes usar una URL pública del logo de la USS o asegurarte de subirla)
-logo_uss = "https://upload.wikimedia.org/wikipedia/commons/2/23/Logo_Universidad_San_Sebastián.png"
+logo_uss = "https://repositorio.uss.cl/"
 st.image(logo_uss, width=300)
 
 # Botón interactivo principal
