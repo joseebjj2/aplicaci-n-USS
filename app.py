@@ -5,9 +5,7 @@ from datetime import datetime
 import pandas as pd
 import streamlit as st
 
-# ------------------------------------------------------------------
-# CONFIGURACIÓN GENERAL
-# ------------------------------------------------------------------
+
 st.set_page_config(page_title="Portal Estudiantil USS", page_icon="🎓", layout="wide")
 
 # El logo debe estar en la MISMA carpeta que este archivo
@@ -70,9 +68,7 @@ def clasificar(texto):
     return "Consulta general"
 
 
-# ------------------------------------------------------------------
-# ESTILO (colores institucionales: azul marino y dorado)
-# ------------------------------------------------------------------
+
 st.markdown(
     """
     <style>
@@ -98,17 +94,13 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# ------------------------------------------------------------------
-# ESTADO DE LA SESIÓN
-# ------------------------------------------------------------------
+
 if "asistencias" not in st.session_state:
     st.session_state.asistencias = []
 if "consultas" not in st.session_state:
     st.session_state.consultas = []
 
-# ------------------------------------------------------------------
-# BARRA LATERAL
-# ------------------------------------------------------------------
+
 with st.sidebar:
     mostrar_logo(width=240)
 
@@ -157,9 +149,7 @@ with st.sidebar:
     fondo_subido = st.file_uploader("Cambiar imagen de fondo (opcional)", type=["png", "jpg", "jpeg"])
     visibilidad = st.slider("Visibilidad del fondo (%)", 5, 40, 12)
 
-# ------------------------------------------------------------------
-# IMAGEN DE FONDO
-# ------------------------------------------------------------------
+
 if usar_fondo:
     if fondo_subido is not None:
         st.markdown(css_fondo(fondo_subido.getvalue(), fondo_subido.type or "image/png", visibilidad), unsafe_allow_html=True)
@@ -168,9 +158,7 @@ if usar_fondo:
         with open(RUTA_FONDO, "rb") as f:
             st.markdown(css_fondo(f.read(), mime_fondo, visibilidad), unsafe_allow_html=True)
 
-# ------------------------------------------------------------------
-# ENCABEZADO
-# ------------------------------------------------------------------
+
 hora = AHORA.hour
 saludo = "Buenos días" if hora < 12 else ("Buenas tardes" if hora < 20 else "Buenas noches")
 nombre_mostrar = nombre.strip().title() if nombre.strip() else "estudiante"
@@ -194,14 +182,12 @@ with col_banner:
 st.subheader("Resumen académico")
 st.write("Revisa tus notas, calcula la nota que necesitas en el examen, consulta tu horario y envía consultas a coordinación.")
 
-# ------------------------------------------------------------------
-# PESTAÑAS
-# ------------------------------------------------------------------
+
 tab_notas, tab_calc, tab_horario, tab_consultas = st.tabs(
     ["📊 Mis notas", "🎯 Meta del examen", "🗓️ Horario", "💬 Consultas"]
 )
 
-# ================= TAB 1: NOTAS =================
+
 with tab_notas:
     st.subheader("Seguimiento de notas del semestre")
     st.caption("Edita las notas directamente en la tabla (escala 1,0 a 7,0). Puedes agregar o quitar ramos.")
@@ -268,7 +254,7 @@ with tab_notas:
     df["Estado"] = df["Nota final"].apply(estado)
     validos = df.dropna(subset=["Nota final"])
 
-    # --- Salida ---
+    
     st.markdown("#### Resultados del semestre")
     if validos.empty:
         st.info("Completa las cuatro notas de al menos un ramo para ver tus resultados.")
@@ -286,7 +272,7 @@ with tab_notas:
         with der:
             st.bar_chart(validos.set_index("Asignatura")["Nota final"], color="#C9A96A")
 
-# ================= TAB 2: META DEL EXAMEN =================
+
 with tab_calc:
     st.subheader("¿Qué nota necesito en el examen?")
     st.caption(f"Ponderaciones actuales: S1 {p1}% · S2 {p2}% · S3 {p3}% · Examen {pe}%")
@@ -325,7 +311,7 @@ with tab_calc:
     )
     st.line_chart(escenarios, color="#13315C")
 
-# ================= TAB 3: HORARIO =================
+
 with tab_horario:
     st.subheader("Horario semanal")
 
@@ -360,7 +346,7 @@ with tab_horario:
     with st.expander("Ver horario de la semana completa"):
         st.dataframe(horario, hide_index=True)
 
-# ================= TAB 4: CONSULTAS =================
+
 with tab_consultas:
     st.subheader("Consultas a coordinación académica")
     st.caption("Escribe tu consulta y recibirás un folio para hacerle seguimiento.")
@@ -397,8 +383,6 @@ with tab_consultas:
     else:
         st.info("Todavía no has enviado consultas en esta sesión.")
 
-# ------------------------------------------------------------------
-# PIE DE PÁGINA
-# ------------------------------------------------------------------
+
 st.divider()
 st.caption("Universidad San Sebastián · Proyecto académico desarrollado con Streamlit")
