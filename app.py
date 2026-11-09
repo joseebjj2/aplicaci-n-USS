@@ -11,8 +11,8 @@ st.title("Mi primera aplicación de Streamlit")
 st.subheader("¡Hola, Streamlit!")
 st.write("Esta es una aplicación simple")
 
-# Imagen en el área principal (puedes usar una URL pública del logo de la USS o asegurarte de subirla)
-logo_uss = "https://repositorio.uss.cl/"
+# Usar la imagen local que subiste a GitHub
+logo_uss = "logo.png"
 st.image(logo_uss, width=300)
 
 # Botón interactivo principal
@@ -31,6 +31,7 @@ st.sidebar.title("Mi primera barra lateral de Streamlit")
 st.sidebar.subheader("¡Hola, Barra Lateral!")
 st.sidebar.write("Esto es una barra lateral")
 
+# Usar la misma imagen local en la barra lateral
 st.sidebar.image(logo_uss, width=200)
 
 # Botón interactivo en la barra lateral
